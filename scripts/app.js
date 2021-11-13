@@ -3,16 +3,9 @@ const card = document.querySelector('.card');
 const details = document.querySelector('.details');
 const time = document.querySelector('.time');
 const condition = document.querySelector('.condition')
-
-// Get City Details and Weather
-const getData = async (location) => {
-
-    const cityD = await getCity(location);
-    const weather = await getWeather(cityD.Key);
-
-    return { cityD, weather };
-}
-
+// Creating new forecast object
+const forecast = new Forecast();
+console.log(forecast)
 // Update UI
 const updateUI = (data) => {
 
@@ -50,7 +43,7 @@ locationSearch.addEventListener('submit', e => {
     locationSearch.reset();
 
     // Getting Data
-    getData(location).then(data => updateUI(data))
+    forecast.getData(location).then(data => updateUI(data))
     .catch(err => console.log(err));
 
     // local storage
@@ -58,7 +51,7 @@ locationSearch.addEventListener('submit', e => {
 })
 
 if(localStorage.getItem('location')){
-    getData(localStorage.getItem('location'))
+    forecast.getData(localStorage.getItem('location'))
     .then(data => updateUI(data))
     .catch(err => console.log(err));
 };
